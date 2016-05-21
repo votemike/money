@@ -1,5 +1,7 @@
 # Money
 
+[![Build Status](https://travis-ci.org/votemike/money.svg?branch=master)](https://travis-ci.org/votemike/money)
+
 Pass in an amount and currency to the Money object to create an immutable object. Perform actions with the object.
 Deals with different units/rounding of different currencies.
 Formats money for display
@@ -33,11 +35,6 @@ $money->getAmount(); //99.50
 $money->getCurrency(); //JPY
 $money->getRoundedAmount(); //100
 ```
-
-## Future Improvements
-
-* Scrutinizer
-* Travis
 
 ## Credits
 
