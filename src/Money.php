@@ -115,14 +115,22 @@ class Money
     /**
      * Returns the amount rounded to the correct number of decimal places for that currency
      *
-     * @todo Change to use NumberFormatter's roundCurrency when https://github.com/symfony/symfony/pull/18827 is accepted
-     *
      * @return float
      */
     public function getRoundedAmount()
     {
-        //return (float)$this->formatter->roundCurrency($this->amount, $this->currency);
-        return (float)$this->roundCurrency($this->amount, $this->currency);
+        $fractionDigits = Intl::getCurrencyBundle()->getFractionDigits($this->currency);
+        $roundingIncrement = Intl::getCurrencyBundle()->getRoundingIncrement($this->currency);
+
+        $value = round($this->amount, $fractionDigits);
+
+        // Swiss rounding
+        if (0 < $roundingIncrement && 0 < $fractionDigits) {
+            $roundingFactor = $roundingIncrement / pow(10, $fractionDigits);
+            $value = round($value / $roundingFactor) * $roundingFactor;
+        }
+
+        return $value;
     }
 
     /**
@@ -233,31 +241,5 @@ class Money
         if ($this->currency !== $money->getCurrency()) {
             throw new DomainException('Currencies must match');
         }
-    }
-
-    /**
-     * Almost a copy of NumberFormatter roundCurrency
-     *
-     * @todo Remove once https://github.com/symfony/symfony/pull/18827 is accepted
-     *
-     * @param $value
-     * @param $currency
-     * @return float|Money
-     */
-    private function roundCurrency($value, $currency)
-    {
-        $fractionDigits = Intl::getCurrencyBundle()->getFractionDigits($currency);
-        $roundingIncrement = Intl::getCurrencyBundle()->getRoundingIncrement($currency);
-
-        // Round with the formatter rounding mode
-        $value = round($value, $fractionDigits);
-
-        // Swiss rounding
-        if (0 < $roundingIncrement && 0 < $fractionDigits) {
-            $roundingFactor = $roundingIncrement / pow(10, $fractionDigits);
-            $value = round($value / $roundingFactor) * $roundingFactor;
-        }
-
-        return $value;
     }
 }
