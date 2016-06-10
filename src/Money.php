@@ -21,8 +21,8 @@ class Money
     private $formatter;
 
     /**
-     * @param $amount
-     * @param $currency
+     * @param float $amount
+     * @param string $currency
      */
     public function __construct($amount, $currency)
     {
@@ -144,7 +144,7 @@ class Money
     }
 
     /**
-     * @param $operator
+     * @param float $operator
      * @return static
      */
     public function multiply($operator)
@@ -153,7 +153,9 @@ class Money
     }
 
     /**
-     * @param $percentage
+     * A number between 0 and 100
+     *
+     * @param float $percentage
      * @return static
      */
     public function percentage($percentage)
