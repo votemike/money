@@ -15,10 +15,6 @@ class Money
      * @var string
      */
     private $currency;
-    /**
-     * @var NumberFormatter
-     */
-    private $formatter;
 
     /**
      * @param float $amount
@@ -35,7 +31,6 @@ class Money
         }
         $this->amount = (float)$amount;
         $this->currency = $currency;
-        $this->formatter = new NumberFormatter('en', NumberFormatter::CURRENCY);
     }
 
     /**
@@ -87,13 +82,15 @@ class Money
      */
     public function format($displayCountryForUS = false)
     {
+        $formatter = new NumberFormatter('en', NumberFormatter::CURRENCY);
+
         if ($displayCountryForUS && $this->currency === 'USD') {
             if ($this->amount >= 0) {
-                return 'US' . $this->formatter->formatCurrency($this->amount, $this->currency);
+                return 'US' . $formatter->formatCurrency($this->amount, $this->currency);
             }
-            return '-US' . $this->formatter->formatCurrency(-$this->amount, $this->currency);
+            return '-US' . $formatter->formatCurrency(-$this->amount, $this->currency);
         }
-        return $this->formatter->formatCurrency($this->amount, $this->currency);
+        return $formatter->formatCurrency($this->amount, $this->currency);
     }
 
     /**
