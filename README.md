@@ -1,6 +1,11 @@
 # Money
 
 [![Build Status](https://travis-ci.org/votemike/money.svg?branch=master)](https://travis-ci.org/votemike/money)
+[![Latest Stable Version](https://poser.pugx.org/votemike/money/v/stable)](https://packagist.org/packages/votemike/money)
+[![Total Downloads](https://poser.pugx.org/votemike/money/downloads)](https://packagist.org/packages/votemike/money)
+[![Latest Unstable Version](https://poser.pugx.org/votemike/money/v/unstable)](https://packagist.org/packages/votemike/money)
+[![License](https://poser.pugx.org/votemike/money/license)](https://packagist.org/packages/votemike/money)
+[![composer.lock](https://poser.pugx.org/votemike/money/composerlock)](https://packagist.org/packages/votemike/money)
 
 Pass in an amount and currency to the Money object to create an immutable object. Perform actions with the object.
 Deals with different units/rounding of different currencies.
