@@ -93,6 +93,12 @@ class Money
         return $formatter->formatCurrency($this->amount, $this->currency);
     }
 
+    /**
+     * Returns a string consisting of the currency symbol, a rounded int and a suffix
+     * e.g. $33k instead of $3321.12
+     *
+     * @return string
+     */
     public function formatShorthand()
     {
         $amount = $this->amount;
@@ -104,6 +110,23 @@ class Money
         $power = $amount > 0 ? floor(log(round($amount), 1000)) : 0;
         $ret = Intl::getCurrencyBundle()->getCurrencySymbol($this->currency, 'en').round($amount / pow(1000, $power), 0). $units[$power];
         return $negative ? '-'.$ret : $ret;
+    }
+
+    /**
+     * The same as format() except that positive numbers always include the + sign
+     *
+     * @param bool $displayCountryForUS Set to true if you would like 'US$' instead of just '$'
+     * @return string
+     */
+    public function formatWithSign($displayCountryForUS = false)
+    {
+        $string = $this->format($displayCountryForUS);
+
+        if ($this->amount <= 0) {
+            return $string;
+        }
+
+        return '+' . $string;
     }
 
     /**

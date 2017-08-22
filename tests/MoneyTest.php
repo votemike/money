@@ -204,6 +204,31 @@ class MoneyTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $money->format($displayCountryForUS));
     }
 
+    public function forcedPlusFormattingDataProvider()
+    {
+        return [
+            [0, 'USD', false, '$0.00'],
+            [10, 'USD', false, '+$10.00'],
+            [-10, 'USD', false, '-$10.00'],
+            [0, 'USD', true, 'US$0.00'],
+            [10, 'USD', true, '+US$10.00'],
+            [-10, 'USD', true, '-US$10.00'],
+        ];
+    }
+
+    /**
+     * @dataProvider forcedPlusFormattingDataProvider
+     * @param mixed $amount
+     * @param string $currencyCode
+     * @param bool $displayCountryForUS
+     * @param string $expected
+     */
+    public function testForcePlusFormatting($amount, $currencyCode, $displayCountryForUS, $expected)
+    {
+        $money = new Money($amount, $currencyCode);
+        $this->assertEquals($expected, $money->formatWithSign($displayCountryForUS));
+    }
+
     public function roundingDataProvider()
     {
         return [

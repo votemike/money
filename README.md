@@ -37,6 +37,7 @@ list($first, $second, $third) = $money->split(20, 33.33);
 
 $money = new Money(99.50, 'JPY');
 $money->format(); //¥100
+$money->formatWithSign(); //+¥100
 $money->getAmount(); //99.50
 $money->getCurrency(); //JPY
 $money->getRoundedAmount(); //100
