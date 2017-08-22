@@ -39,6 +39,9 @@ $money->format(); //¥100
 $money->getAmount(); //99.50
 $money->getCurrency(); //JPY
 $money->getRoundedAmount(); //100
+
+$money = new Money(9500, 'USD');
+$money->formatShorthand(); //$10k
 ```
 
 ## Credits

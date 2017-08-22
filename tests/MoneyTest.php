@@ -324,4 +324,50 @@ class MoneyTest extends PHPUnit_Framework_TestCase
         $this->expectException(InvalidArgumentException::class);
         $money->split([60, 30, 20]);
     }
+
+    public function testShorthandFormatting()
+    {
+        $money = new Money(0.0000, 'GBP');
+        $this->assertEquals('£0', $money->formatShorthand());
+
+        $money = new Money(33.333, 'USD');
+        $this->assertEquals('$33', $money->formatShorthand());
+        $this->assertEquals('-$33', $money->inv()->formatShorthand());
+
+        $money = new Money(999.5, 'JPY');
+        $this->assertEquals('¥1k', $money->formatShorthand());
+        $this->assertEquals('-¥1k', $money->inv()->formatShorthand());
+
+        $money = new Money(9500, 'CAD');
+        $this->assertEquals('CA$10k', $money->formatShorthand());
+        $this->assertEquals('-CA$10k', $money->inv()->formatShorthand());
+
+        $money = new Money(77777.777, 'GBP');
+        $this->assertEquals('£78k', $money->formatShorthand());
+        $this->assertEquals('-£78k', $money->inv()->formatShorthand());
+
+        $money = new Money(111111.111, 'USD');
+        $this->assertEquals('$111k', $money->formatShorthand());
+        $this->assertEquals('-$111k', $money->inv()->formatShorthand());
+
+        $money = new Money(999999.5, 'JPY');
+        $this->assertEquals('¥1m', $money->formatShorthand());
+        $this->assertEquals('-¥1m', $money->inv()->formatShorthand());
+
+        $money = new Money(3333333.33333, 'GBP');
+        $this->assertEquals('£3m', $money->formatShorthand());
+        $this->assertEquals('-£3m', $money->inv()->formatShorthand());
+
+        $money = new Money(77777777.333, 'USD');
+        $this->assertEquals('$78m', $money->formatShorthand());
+        $this->assertEquals('-$78m', $money->inv()->formatShorthand());
+
+        $money = new Money(77777777777.333, 'USD');
+        $this->assertEquals('$78bn', $money->formatShorthand());
+        $this->assertEquals('-$78bn', $money->inv()->formatShorthand());
+
+        $money = new Money(333377777777777.333, 'USD');
+        $this->assertEquals('$333tn', $money->formatShorthand());
+        $this->assertEquals('-$333tn', $money->inv()->formatShorthand());
+    }
 }

@@ -93,6 +93,19 @@ class Money
         return $formatter->formatCurrency($this->amount, $this->currency);
     }
 
+    public function formatShorthand()
+    {
+        $amount = $this->amount;
+        $negative = 0 > $amount;
+        if ($negative) {
+            $amount *= -1;
+        }
+        $units = ['', 'k', 'm', 'bn', 'tn'];
+        $power = $amount > 0 ? floor(log(round($amount), 1000)) : 0;
+        $ret = Intl::getCurrencyBundle()->getCurrencySymbol($this->currency, 'en').round($amount / pow(1000, $power), 0). $units[$power];
+        return $negative ? '-'.$ret : $ret;
+    }
+
     /**
      * @return float
      */
