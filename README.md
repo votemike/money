@@ -6,6 +6,7 @@
 [![Latest Unstable Version](https://poser.pugx.org/votemike/money/v/unstable)](https://packagist.org/packages/votemike/money)
 [![License](https://poser.pugx.org/votemike/money/license)](https://packagist.org/packages/votemike/money)
 [![composer.lock](https://poser.pugx.org/votemike/money/composerlock)](https://packagist.org/packages/votemike/money)
+[![StyleCI](https://styleci.io/repos/59353158/shield?branch=master)](https://styleci.io/repos/59353158)
 
 Pass in an amount and currency to the Money object to create an immutable object. Perform actions with the object.
 Deals with different units/rounding of different currencies.
