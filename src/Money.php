@@ -103,8 +103,7 @@ class Money
     {
         $amount = $this->getRoundedAmount();
         $negative = 0 > $amount;
-        if ($negative)
-        {
+        if ($negative) {
             $amount *= -1;
         }
         $amount = number_format($amount, Intl::getCurrencyBundle()->getFractionDigits($this->currency));
