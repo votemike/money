@@ -229,6 +229,29 @@ class MoneyTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $money->formatWithSign($displayCountryForUS));
     }
 
+    public function accountingFormattingDataProvider()
+    {
+        return [
+            [0, 'USD', '0.00'],
+            [-0.001, 'USD', '0.00'],
+            [12.345, 'GBP', '12.35'],
+            [-987.654, 'CAD', '(987.65)'],
+            [-1.2345, 'JPY', '(1)'],
+        ];
+    }
+
+    /**
+     * @dataProvider accountingFormattingDataProvider
+     * @param int|float $amount
+     * @param string $currencyCode
+     * @param string $expected
+     */
+    public function testAccountingFormatting($amount, $currencyCode, $expected)
+    {
+        $money = new Money($amount, $currencyCode);
+        $this->assertSame($expected, $money->formatForAccounting());
+    }
+
     public function roundingDataProvider()
     {
         return [

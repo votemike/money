@@ -94,6 +94,24 @@ class Money
     }
 
     /**
+     * Returns a rounded number without currency
+     * If the number is negative, the currency is within parentheses
+     *
+     * @return string
+     */
+    public function formatForAccounting()
+    {
+        $amount = $this->getRoundedAmount();
+        $negative = 0 > $amount;
+        if ($negative)
+        {
+            $amount *= -1;
+        }
+        $amount = number_format($amount, Intl::getCurrencyBundle()->getFractionDigits($this->currency));
+        return $negative ? '(' . $amount . ')' : $amount;
+    }
+
+    /**
      * Returns a string consisting of the currency symbol, a rounded int and a suffix
      * e.g. $33k instead of $3321.12
      *
