@@ -2,7 +2,8 @@
 
 use Votemike\Money\Money;
 
-class MoneyBench {
+class MoneyBench
+{
 
     /**
      * @Iterations(5)

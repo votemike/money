@@ -44,6 +44,9 @@ $money->getRoundedAmount(); //100
 
 $money = new Money(9500, 'USD');
 $money->formatShorthand(); //$10k
+
+$money = new Money(9.500, 'USD');
+$money->formatForAccounting(); //(9.50)
 ```
 
 ## Credits
