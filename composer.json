@@ -15,6 +15,7 @@
     "symfony/intl": "^2.0 || ^3.0"
   },
   "require-dev": {
+    "phpbench/phpbench": "^0.13.0",
     "phpunit/phpunit": "^5.3"
   },
   "autoload": {
@@ -27,5 +28,6 @@
       "Votemike\\Money\\Test\\": "tests"
     }
   },
-  "prefer-stable": true
+  "prefer-stable": true,
+  "sort-packages": true
 }
