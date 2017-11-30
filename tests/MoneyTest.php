@@ -1,4 +1,4 @@
-<?php namespace Tests;
+<?php namespace Votemike\Money\Tests;
 
 use DomainException;
 use InvalidArgumentException;

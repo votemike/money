@@ -18,6 +18,7 @@
   },
   "require-dev": {
     "phpbench/phpbench": "^0.13.0",
+    "phpstan/phpstan": "^0.9.0",
     "phpunit/phpunit": "^5.3"
   },
   "autoload": {
@@ -27,9 +28,12 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Votemike\\Money\\Test\\": "tests"
+      "Votemike\\Money\\Benchmarks\\": "benchmarks",
+      "Votemike\\Money\\Tests\\": "tests"
     }
   },
   "prefer-stable": true,
-  "sort-packages": true
+  "config": {
+    "sort-packages": true
+  }
 }

@@ -1,4 +1,4 @@
-<?php
+<?php namespace Votemike\Money\Benchmarks;
 
 use Votemike\Money\Money;
 
