@@ -7,7 +7,7 @@ use Votemike\Money\Money;
 
 class MoneyTest extends PHPUnit_Framework_TestCase
 {
-    public function amountDataProvider()
+    public function amountDataProvider(): array
     {
         return [
             [1000.00, 1000.00],
@@ -27,7 +27,7 @@ class MoneyTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $money->getAmount());
     }
 
-    public function currencyCodeDataProvider()
+    public function currencyCodeDataProvider(): array
     {
         return [
             ['USD'],
@@ -41,7 +41,7 @@ class MoneyTest extends PHPUnit_Framework_TestCase
      * @dataProvider currencyCodeDataProvider
      * @param string $currencyCode
      */
-    public function testCanRetrieveCurrency($currencyCode)
+    public function testCanRetrieveCurrency(string $currencyCode)
     {
         $money = new Money(1000, $currencyCode);
         $this->assertEquals($currencyCode, $money->getCurrency());
@@ -85,7 +85,7 @@ class MoneyTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $money->abs()->getAmount());
     }
 
-    public function invertedAmountDataProvider()
+    public function invertedAmountDataProvider(): array
     {
         return [
             ['-9.9999', 9.9999],
@@ -156,7 +156,7 @@ class MoneyTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(30, $money->multiply(3)->getAmount());
     }
 
-    public function formattingDataProvider()
+    public function formattingDataProvider(): array
     {
         return [
             ['10.000', 'USD', '$10.00'],
@@ -176,13 +176,13 @@ class MoneyTest extends PHPUnit_Framework_TestCase
      * @param string $currencyCode
      * @param string $expected
      */
-    public function testFormatting($amount, $currencyCode, $expected)
+    public function testFormatting($amount, string $currencyCode, $expected)
     {
         $money = new Money($amount, $currencyCode);
         $this->assertEquals($expected, (string)$money);
     }
 
-    public function manualFormattingDataProvider()
+    public function manualFormattingDataProvider(): array
     {
         return [
             [-10, 'USD', false, '-$10.00'],
@@ -196,15 +196,16 @@ class MoneyTest extends PHPUnit_Framework_TestCase
      * @dataProvider manualFormattingDataProvider
      * @param mixed $amount
      * @param string $currencyCode
+     * @param bool $displayCountryForUS
      * @param string $expected
      */
-    public function testManualFormatting($amount, $currencyCode, $displayCountryForUS, $expected)
+    public function testManualFormatting($amount, string $currencyCode, bool $displayCountryForUS, string $expected)
     {
         $money = new Money($amount, $currencyCode);
         $this->assertEquals($expected, $money->format($displayCountryForUS));
     }
 
-    public function forcedPlusFormattingDataProvider()
+    public function forcedPlusFormattingDataProvider(): array
     {
         return [
             [0, 'USD', false, '$0.00'],
@@ -223,13 +224,13 @@ class MoneyTest extends PHPUnit_Framework_TestCase
      * @param bool $displayCountryForUS
      * @param string $expected
      */
-    public function testForcePlusFormatting($amount, $currencyCode, $displayCountryForUS, $expected)
+    public function testForcePlusFormatting($amount, string $currencyCode, bool $displayCountryForUS, string $expected)
     {
         $money = new Money($amount, $currencyCode);
         $this->assertEquals($expected, $money->formatWithSign($displayCountryForUS));
     }
 
-    public function accountingFormattingDataProvider()
+    public function accountingFormattingDataProvider(): array
     {
         return [
             [0, 'USD', '0.00'],
@@ -246,13 +247,13 @@ class MoneyTest extends PHPUnit_Framework_TestCase
      * @param string $currencyCode
      * @param string $expected
      */
-    public function testAccountingFormatting($amount, $currencyCode, $expected)
+    public function testAccountingFormatting($amount, string $currencyCode, string $expected)
     {
         $money = new Money($amount, $currencyCode);
         $this->assertSame($expected, $money->formatForAccounting());
     }
 
-    public function roundingDataProvider()
+    public function roundingDataProvider(): array
     {
         return [
             ['10.000', 'USD', 10.00],
@@ -272,14 +273,14 @@ class MoneyTest extends PHPUnit_Framework_TestCase
      * @param string $currencyCode
      * @param string $expected
      */
-    public function testRoundedAmount($amount, $currencyCode, $expected)
+    public function testRoundedAmount($amount, string $currencyCode, $expected)
     {
         $money = new Money($amount, $currencyCode);
         $this->assertEquals($expected, $money->getRoundedAmount());
         $this->assertEquals($expected, $money->round()->getAmount());
     }
 
-    public function invalidCurrencyDataProvider()
+    public function invalidCurrencyDataProvider(): array
     {
         return [
             ['ZZZ'],
@@ -291,13 +292,13 @@ class MoneyTest extends PHPUnit_Framework_TestCase
      * @dataProvider invalidCurrencyDataProvider
      * @param string $currencyCode
      */
-    public function testValidCurrency($currencyCode)
+    public function testValidCurrency(string $currencyCode)
     {
         $this->expectException(InvalidArgumentException::class);
         new Money(10.000000, $currencyCode);
     }
 
-    public function percentageDataProvider()
+    public function percentageDataProvider(): array
     {
         return [
             ['2.222222', 50, 1.111111],
@@ -310,9 +311,9 @@ class MoneyTest extends PHPUnit_Framework_TestCase
      * @dataProvider percentageDataProvider
      * @param mixed $amount
      * @param int $percentage
-     * @param string $expected
+     * @param float $expected
      */
-    public function testGettingPercentage($amount, $percentage, $expected)
+    public function testGettingPercentage($amount, int $percentage, float $expected)
     {
         $money = new Money($amount, 'USD');
         $this->assertEquals($expected, $money->percentage($percentage)->getAmount());

@@ -17,10 +17,10 @@ class Money
     private $currency;
 
     /**
-     * @param float $amount
+     * @param float|int|string $amount
      * @param string $currency
      */
-    public function __construct($amount, $currency)
+    public function __construct($amount, string $currency)
     {
         if (!is_numeric($amount)) {
             throw new InvalidArgumentException('Money only accepts numeric amounts');
@@ -33,29 +33,20 @@ class Money
         $this->currency = $currency;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->format();
     }
 
     /**
      * Returns a positive clone of Money object
-     *
-     * @return static
      */
-    public function abs()
+    public function abs(): Money
     {
         return new static(abs($this->amount), $this->currency);
     }
 
-    /**
-     * @param Money $money
-     * @return static
-     */
-    public function add(Money $money)
+    public function add(Money $money): Money
     {
         $this->assertCurrencyMatches($money);
 
@@ -66,7 +57,7 @@ class Money
      * @param float $operator
      * @return static
      */
-    public function divide($operator)
+    public function divide($operator): Money
     {
         if ($operator == 0) {
             throw new InvalidArgumentException('Cannot divide by zero');
@@ -80,7 +71,7 @@ class Money
      * @param bool $displayCountryForUS Set to true if you would like 'US$' instead of just '$'
      * @return string
      */
-    public function format($displayCountryForUS = false)
+    public function format(bool $displayCountryForUS = false): string
     {
         $formatter = new NumberFormatter('en', NumberFormatter::CURRENCY);
 
@@ -96,10 +87,8 @@ class Money
     /**
      * Returns a rounded number without currency
      * If the number is negative, the currency is within parentheses
-     *
-     * @return string
      */
-    public function formatForAccounting()
+    public function formatForAccounting(): string
     {
         $amount = $this->getRoundedAmount();
         $negative = 0 > $amount;
@@ -113,10 +102,8 @@ class Money
     /**
      * Returns a string consisting of the currency symbol, a rounded int and a suffix
      * e.g. $33k instead of $3321.12
-     *
-     * @return string
      */
-    public function formatShorthand()
+    public function formatShorthand(): string
     {
         $amount = $this->amount;
         $negative = 0 > $amount;
@@ -135,7 +122,7 @@ class Money
      * @param bool $displayCountryForUS Set to true if you would like 'US$' instead of just '$'
      * @return string
      */
-    public function formatWithSign($displayCountryForUS = false)
+    public function formatWithSign(bool $displayCountryForUS = false): string
     {
         $string = $this->format($displayCountryForUS);
 
@@ -146,28 +133,20 @@ class Money
         return '+' . $string;
     }
 
-    /**
-     * @return float
-     */
-    public function getAmount()
+    public function getAmount(): float
     {
         return $this->amount;
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrency()
+    public function getCurrency(): string
     {
         return $this->currency;
     }
 
     /**
      * Returns the amount rounded to the correct number of decimal places for that currency
-     *
-     * @return float
      */
-    public function getRoundedAmount()
+    public function getRoundedAmount(): float
     {
         $fractionDigits = Intl::getCurrencyBundle()->getFractionDigits($this->currency);
         $roundingIncrement = Intl::getCurrencyBundle()->getRoundingIncrement($this->currency);
@@ -185,10 +164,8 @@ class Money
 
     /**
      * Invert the amount
-     *
-     * @return static
      */
-    public function inv()
+    public function inv(): Money
     {
         return new static(-$this->amount, $this->currency);
     }
@@ -197,7 +174,7 @@ class Money
      * @param float $operator
      * @return static
      */
-    public function multiply($operator)
+    public function multiply($operator): Money
     {
         return new static($this->amount * $operator, $this->currency);
     }
@@ -208,17 +185,15 @@ class Money
      * @param float $percentage
      * @return static
      */
-    public function percentage($percentage)
+    public function percentage($percentage): Money
     {
         return new static(($this->amount * $percentage) / 100, $this->currency);
     }
 
     /**
      * Returns rounded clone of Money object, rounded to the correct number of decimal places for that currency
-     *
-     * @return static
      */
-    public function round()
+    public function round(): Money
     {
         return new static($this->getRoundedAmount(), $this->currency);
     }
@@ -232,9 +207,9 @@ class Money
      *
      * @param float[] $percentages An array of percentages that must total 100 or less
      * @param bool $round
-     * @return array
+     * @return Money[]
      */
-    public function split(array $percentages, $round = true)
+    public function split(array $percentages, bool $round = true): array
     {
         $totalPercentage = array_sum($percentages);
         if ($totalPercentage > 100) {
@@ -278,7 +253,7 @@ class Money
      * @param Money $money
      * @return static
      */
-    public function sub(Money $money)
+    public function sub(Money $money): Money
     {
         $this->assertCurrencyMatches($money);
 
