@@ -14,7 +14,7 @@
   ],
   "require": {
     "php": "^7",
-    "symfony/intl": "^2.0 || ^3.0 || ^4.0"
+    "symfony/intl": "^2.0 || ^3.0 || ^4.0.1"
   },
   "require-dev": {
     "phpbench/phpbench": "^0.13.0",
