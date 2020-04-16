@@ -51,7 +51,7 @@ $money->formatForAccounting(); //(9.50)
 
 ## Credits
 
-- [Michael Gwynne](http://www.votemike.co.uk)
+- [Michael Gwynne](https://votemike.co.uk)
 
 ## License
 
